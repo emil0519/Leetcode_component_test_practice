@@ -5,14 +5,11 @@ import {
   GreyContaner,
   StyledInput,
   WarningArea,
+  ColumnFlexbox,
 } from "../styles";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { addComma } from "../utils/addComma";
 
-const ColumnFlexbox = styled(FlexContainer)`
-  flex-direction: column;
-  gap: 4px;
-`;
 
 const AlignLeftFlexBox = styled(FlexContainer)`
   justify-content: flex-end;

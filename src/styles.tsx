@@ -34,4 +34,9 @@ export const WarningArea = styled.aside`
   padding: 4px;
 `;
 
+export const ColumnFlexbox = styled(FlexContainer)`
+  flex-direction: column;
+  gap: 4px;
+`;
+
 export {};

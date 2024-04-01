@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { PriceInput } from "./component/priceInput";
 import { ThemeProvider } from "styled-components";
 import GlobalStyle from "./styles/globalStyle";
+import { AgeGroupSelect } from "./component/ageGroupSelect";
 
 const theme = {
   colors: {
@@ -14,10 +15,12 @@ const theme = {
 
 const OuterWrapper = styled.div`
   display: flex;
-  width: 100%;
+  flex-direction: column;
+  min-width: 100vh;
   min-height: 100vh;
-  justify-content: flex-start;
-  align-items: center;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 12px;
 `;
 
 function App() {
@@ -26,6 +29,7 @@ function App() {
       <GlobalStyle />
       <OuterWrapper>
         <PriceInput />
+        <AgeGroupSelect />
       </OuterWrapper>
     </ThemeProvider>
   );
