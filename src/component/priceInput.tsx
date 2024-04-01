@@ -1,21 +1,18 @@
-import styled from "styled-components";
 import {
   GreyLabel,
   FlexContainer,
   GreyContaner,
-  StyledInput,
   WarningArea,
   ColumnFlexbox,
+  AlignLeftFlexBox,
+  IsRedBorderType,
 } from "../styles";
 import { useState } from "react";
 import { addComma } from "../utils/addComma";
+import styled from "styled-components";
 
 
-const AlignLeftFlexBox = styled(FlexContainer)`
-  justify-content: flex-end;
-`;
-
-export const PriceInput = () => {
+export const PriceInput = ():React.ReactElement => {
   const [inputFee, setInputFee] = useState<string>("0");
   const isValidNumberString = (str: string): boolean => {
     return /^\d+(\.\d+)?$/.test(str.replace(/,/g, ""));
@@ -46,7 +43,7 @@ export const PriceInput = () => {
             setInputFee(e.target.value);
           }}
           onBlur={(e) => setInputFee(addComma(e.target.value))}
-          isEmpty={!inputFee.length}
+          isRedBorder={!inputFee.length}
         />
       </FlexContainer>
       {(!inputFee.length || !isValidNumberString(inputFee)) && (
@@ -58,3 +55,10 @@ export const PriceInput = () => {
     </ColumnFlexbox>
   );
 };
+
+export const StyledInput = styled.input<IsRedBorderType>`
+  border-radius: 4px;
+  border-color: ${(props) => props.theme.colors.lightGrey};
+  padding: 4px;
+  border: 1px solid ${({ isRedBorder }) => (isRedBorder ? "red" : "black")};
+`;
