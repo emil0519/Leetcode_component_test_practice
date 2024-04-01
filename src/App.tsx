@@ -1,25 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import styled from "styled-components";
+import { PriceInput } from "./component/priceInput";
+import { ThemeProvider } from "styled-components";
+import GlobalStyle from "./styles/globalStyle";
+
+const theme = {
+  colors: {
+    lightGrey: "#f0f0f0",
+    darkGrey: "#333333",
+    red: "#f5425a",
+    lightRed: "#F9EAE8",
+  },
+};
+
+const OuterWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  justify-content: flex-start;
+  align-items: center;
+`;
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <OuterWrapper>
+        <PriceInput />
+      </OuterWrapper>
+    </ThemeProvider>
   );
 }
 
