@@ -1,8 +1,7 @@
 import styled from "styled-components";
-import { PriceInput } from "./component/priceInput";
 import { ThemeProvider } from "styled-components";
 import GlobalStyle from "./styles/globalStyle";
-import { AgeGroupSelect } from "./component/ageGroupSelect";
+import { AgeGroupPriceList } from "./component/ageGroupPriceList";
 
 const theme = {
   colors: {
@@ -10,6 +9,7 @@ const theme = {
     darkGrey: "#333333",
     red: "#f5425a",
     lightRed: "#F9EAE8",
+    green: "#76CCCA"
   },
 };
 
@@ -19,8 +19,9 @@ const OuterWrapper = styled.div`
   min-width: 100vh;
   min-height: 100vh;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   gap: 12px;
+  padding: 100px 0;
 `;
 
 function App() {
@@ -28,8 +29,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <OuterWrapper>
-        <PriceInput />
-        <AgeGroupSelect />
+        <AgeGroupPriceList />
       </OuterWrapper>
     </ThemeProvider>
   );

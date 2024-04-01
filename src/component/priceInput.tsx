@@ -6,7 +6,7 @@ import {
   ColumnFlexbox,
   AlignLeftFlexBox,
   IsRedBorderType,
-} from "../styles";
+} from "../styles/styles";
 import { useState } from "react";
 import { addComma } from "../utils/addComma";
 import styled from "styled-components";

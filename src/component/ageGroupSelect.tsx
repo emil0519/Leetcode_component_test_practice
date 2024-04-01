@@ -7,7 +7,7 @@ import {
   ColumnFlexbox,
   AlignLeftFlexBox,
   IsRedBorderType,
-} from "../styles";
+} from "../styles/styles";
 import styled from "styled-components";
 
 export const AgeGroupSelect = (): React.ReactElement => {
@@ -44,7 +44,7 @@ export const AgeGroupSelect = (): React.ReactElement => {
       <FlexContainer>
         <StyledSelect
           id="startAge"
-          isRedBorder={false}
+          isRedBorder={ageRange[0] === ageRange[1]}
           onChange={(e) => setAgeRange([Number(e.target.value), ageRange[1]])}
         >
           {startOptions.map((option) => (
@@ -60,7 +60,7 @@ export const AgeGroupSelect = (): React.ReactElement => {
         <GreyContaner>~</GreyContaner>
         <StyledSelect
           id="endAge"
-          isRedBorder={false}
+          isRedBorder={ageRange[0] === ageRange[1]}
           onChange={(e) => setAgeRange([ageRange[0], Number(e.target.value)])}
         >
           {endOptions.map((option) => (
@@ -84,9 +84,10 @@ export const AgeGroupSelect = (): React.ReactElement => {
   );
 };
 
-export const StyledSelect = styled.select<IsRedBorderType>`
+const StyledSelect = styled.select<IsRedBorderType>`
   border-radius: 4px;
   border-color: ${(props) => props.theme.colors.lightGrey};
   padding: 4px;
   border: 1px solid ${({ isRedBorder }) => (isRedBorder ? "red" : "black")};
+  min-width: 100px;
 `;
