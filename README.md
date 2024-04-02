@@ -2,10 +2,11 @@
 
 1. Clone the repo to your local environemnt 
 
-
+```javascript
     mkdir emil_lau_code_test
     cd emil_lau_code_test
     git clone https://github.com/emil0519/for_interview.git
+```
 
 2. Install dependencies
 `npm i`
