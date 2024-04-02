@@ -16,11 +16,18 @@ Open another terminal, then run
 `npm run test`
 
 # Folder structure
-├── public/ - icons and public resourcces
+
+├── public/ - icons and public resources
+|
 ├── src/
-│   ├── __tests__/ - tests using Jest
-│   ├── components/ - reusable component
-│   ├── styles/ - global style and resuable styles
-│   ├── utils - utils functino of addComma & getNumberIntervals
-│   ├── App.tsx - major layout 
+|
+│── ├── __tests__/ - tests using Jest
+|
+│── ├── components/ - reusable component
+|
+│── ├── styles/ - global style and reusable styles
+|
+│── ├── utils/ - utility functions (e.g., addComma, getNumberIntervals)
+|
+│── ├── App.tsx - major layout
 └── ...
