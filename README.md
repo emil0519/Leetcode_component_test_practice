@@ -17,7 +17,7 @@
 ```javascript
     npm start
 ```
-4. Run test
+4. Run test <br />
 Open another terminal, then run
 ```javascript
     npm run test
