@@ -1,21 +1,61 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import { ColumnFlexbox, FlexContainer } from "../styles/styles";
 import { AgeGroupSelect } from "./ageGroupSelect";
 import { PriceInput } from "./priceInput";
+import { AgeGroupType } from "../type";
+import { getNumberIntervals } from "../utils/getNumberIntervals";
 
-interface ageGroupType {
-  ageGroup: number[];
-  price: number;
-  id: number;
+interface PropsType {
+  onChange: (agePriceList: string) => void;
 }
 
-export const AgeGroupPriceList = (): React.ReactElement => {
-  const defaultAgePrice = { ageGroup: [0, 20], price: 0, id: 0 };
-  const [agePriceList, setAgePriceList] = useState<ageGroupType[]>([
+export const AgeGroupPriceList = ({
+    onChange,
+}: PropsType): React.ReactElement => {
+  const defaultAgePrice = { ageGroup: [0, 20], price: "0", id: 0 };
+  const [agePriceList, setAgePriceList] = useState<AgeGroupType[]>([
     defaultAgePrice,
   ]);
+  const [isAddPriceDisable, setIsAddPriceDisalbe] = useState<boolean>(false);
+
+  useEffect(() => {
+    const formattedAgePriceList = agePriceList.map(item =>
+      `{ ageGroup:[${item.ageGroup.join(', ')}], price:${item.price} }`
+    );
+    onChange(`result = [\n${formattedAgePriceList.join(',\n')}\n]`);
+  }, [agePriceList, onChange]);
+
+  useEffect(()=>{
+    const ageGroupList = agePriceList.map(item=> item.ageGroup);
+    console.log(getNumberIntervals)
+  },[agePriceList])
+
+  const updateAgeGroup = (
+    selectedIndex: number,
+    newAgeRange: number[]
+  ): void => {
+    setAgePriceList(
+      agePriceList.map((item, index) => {
+        if (index === selectedIndex) {
+          return { ...item, ageGroup: newAgeRange };
+        }
+        return item;
+      })
+    );
+  };
+  const updatePrice = (index: number, newPrice: string): void => {
+    setAgePriceList(
+      agePriceList.map((item, i) => {
+        if (i === index) {
+          return { ...item, price: newPrice };
+        }
+        return item;
+      })
+    );
+  };
+
   return (
     <React.Fragment>
       {agePriceList.map((item, index) => (
@@ -35,8 +75,14 @@ export const AgeGroupPriceList = (): React.ReactElement => {
             )}
           </FlexSpaceBetween>
           <FlexWithMarginGap>
-            <AgeGroupSelect />
-            <PriceInput />
+            <AgeGroupSelect
+              ageRange={agePriceList[index].ageGroup}
+              setAgeRange={(newAgeRange) => updateAgeGroup(index, newAgeRange)}
+            />
+            <PriceInput
+              inputFee={agePriceList[index].price.toString()}
+              setInputFee={(fee) => updatePrice(index, fee)}
+            />
           </FlexWithMarginGap>
           <GreenButton
             onClick={() =>

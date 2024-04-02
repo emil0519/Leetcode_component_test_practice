@@ -2,16 +2,9 @@ import styled from "styled-components";
 import { ThemeProvider } from "styled-components";
 import GlobalStyle from "./styles/globalStyle";
 import { AgeGroupPriceList } from "./component/ageGroupPriceList";
+import { theme } from "./styles/styles";
 
-const theme = {
-  colors: {
-    lightGrey: "#f0f0f0",
-    darkGrey: "#333333",
-    red: "#f5425a",
-    lightRed: "#F9EAE8",
-    green: "#76CCCA"
-  },
-};
+
 
 const OuterWrapper = styled.div`
   display: flex;
@@ -29,7 +22,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <OuterWrapper>
-        <AgeGroupPriceList />
+        <AgeGroupPriceList onChange={result => console.log(result)}/>
       </OuterWrapper>
     </ThemeProvider>
   );

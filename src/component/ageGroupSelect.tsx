@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import {
   GreyLabel,
   FlexContainer,
@@ -9,9 +9,17 @@ import {
   IsRedBorderType,
 } from "../styles/styles";
 import styled from "styled-components";
+import { AgeGroupType } from "../type";
 
-export const AgeGroupSelect = (): React.ReactElement => {
-  const [ageRange, setAgeRange] = useState<number[]>([0, 20]);
+interface PropsType {
+  ageRange: AgeGroupType["ageGroup"];
+  setAgeRange: (ageRange: AgeGroupType["ageGroup"]) => void;
+ }
+
+export const AgeGroupSelect = ({
+  ageRange,
+  setAgeRange,
+}: PropsType): React.ReactElement => {
   const startOptions = useMemo(() => {
     if (ageRange[1] !== 20) {
       return Array.from({ length: 21 }, (_, index) => ({
@@ -43,8 +51,9 @@ export const AgeGroupSelect = (): React.ReactElement => {
       <GreyLabel htmlFor="ageRange">年齡</GreyLabel>
       <FlexContainer>
         <StyledSelect
-          id="startAge"
-          isRedBorder={ageRange[0] === ageRange[1]}
+          aria-label="startAge"
+          data-testid="startAge"
+          $isRedBorder={ageRange[0] === ageRange[1]}
           onChange={(e) => setAgeRange([Number(e.target.value), ageRange[1]])}
         >
           {startOptions.map((option) => (
@@ -59,8 +68,9 @@ export const AgeGroupSelect = (): React.ReactElement => {
         </StyledSelect>
         <GreyContaner>~</GreyContaner>
         <StyledSelect
-          id="endAge"
-          isRedBorder={ageRange[0] === ageRange[1]}
+          aria-label="endAge"
+          data-testid="endAge"
+          $isRedBorder={ageRange[0] === ageRange[1]}
           onChange={(e) => setAgeRange([ageRange[0], Number(e.target.value)])}
         >
           {endOptions.map((option) => (
@@ -88,6 +98,6 @@ const StyledSelect = styled.select<IsRedBorderType>`
   border-radius: 4px;
   border-color: ${(props) => props.theme.colors.lightGrey};
   padding: 4px;
-  border: 1px solid ${({ isRedBorder }) => (isRedBorder ? "red" : "black")};
+  border: 1px solid ${({ $isRedBorder }) => ($isRedBorder ? "red" : "black")};
   min-width: 100px;
 `;

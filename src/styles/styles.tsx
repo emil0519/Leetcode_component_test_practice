@@ -2,8 +2,18 @@ import { InputHTMLAttributes } from "react";
 import styled from "styled-components";
 
 export interface IsRedBorderType extends InputHTMLAttributes<HTMLInputElement> {
-  isRedBorder: boolean;
+  $isRedBorder: boolean;
 }
+
+export const theme = {
+  colors: {
+    lightGrey: "#f0f0f0",
+    darkGrey: "#333333",
+    red: "#f5425a",
+    lightRed: "#F9EAE8",
+    green: "#76CCCA"
+  },
+};
 
 export const GreyLabel = styled.label`
   color: ${(props) => props.theme.colors.darkGrey};

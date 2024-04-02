@@ -7,13 +7,17 @@ import {
   AlignLeftFlexBox,
   IsRedBorderType,
 } from "../styles/styles";
-import { useState } from "react";
+import { AgeGroupType } from "../type";
 import { addComma } from "../utils/addComma";
 import styled from "styled-components";
 
 
-export const PriceInput = ():React.ReactElement => {
-  const [inputFee, setInputFee] = useState<string>("0");
+interface PropsType {
+  inputFee: AgeGroupType["price"];
+  setInputFee: (fee: AgeGroupType["price"]) => void;
+}
+
+export const PriceInput = ({inputFee, setInputFee}:PropsType):React.ReactElement => {
   const isValidNumberString = (str: string): boolean => {
     return /^\d+(\.\d+)?$/.test(str.replace(/,/g, ""));
   };
@@ -39,11 +43,12 @@ export const PriceInput = ():React.ReactElement => {
           placeholder="請輸入費用"
           value={inputFee}
           onChange={(e) => {
+            console.log(inputFee)
             if (!inputFee.length) setInputFee("");
             setInputFee(e.target.value);
           }}
           onBlur={(e) => setInputFee(addComma(e.target.value))}
-          isRedBorder={!inputFee.length}
+          $isRedBorder={!inputFee.length}
         />
       </FlexContainer>
       {(!inputFee.length || !isValidNumberString(inputFee)) && (
@@ -60,5 +65,5 @@ export const StyledInput = styled.input<IsRedBorderType>`
   border-radius: 4px;
   border-color: ${(props) => props.theme.colors.lightGrey};
   padding: 4px;
-  border: 1px solid ${({ isRedBorder }) => (isRedBorder ? "red" : "black")};
+  border: 1px solid ${({ $isRedBorder }) => ($isRedBorder ? "red" : "black")};
 `;
