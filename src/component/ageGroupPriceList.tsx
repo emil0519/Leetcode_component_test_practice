@@ -12,25 +12,60 @@ interface PropsType {
 }
 
 export const AgeGroupPriceList = ({
-    onChange,
+  onChange,
 }: PropsType): React.ReactElement => {
   const defaultAgePrice = { ageGroup: [0, 20], price: "0", id: 0 };
   const [agePriceList, setAgePriceList] = useState<AgeGroupType[]>([
     defaultAgePrice,
   ]);
-  const [isAddPriceDisable, setIsAddPriceDisalbe] = useState<boolean>(false);
+  const [isDisableAddPrice, setIsDisableAddPrice] = useState<boolean>(false);
+  const [isShowOverlapWarning, setIsShowOverlapWarning] =
+    useState<boolean>(false);
 
   useEffect(() => {
-    const formattedAgePriceList = agePriceList.map(item =>
-      `{ ageGroup:[${item.ageGroup.join(', ')}], price:${item.price} }`
+    const formattedAgePriceList = agePriceList.map(
+      (item) =>
+        `{ ageGroup:[${item.ageGroup.join(", ")}], price:${item.price} }`
     );
-    onChange(`result = [\n${formattedAgePriceList.join(',\n')}\n]`);
+    onChange(`result = [\n${formattedAgePriceList.join(",\n")}\n]`);
   }, [agePriceList, onChange]);
 
-  useEffect(()=>{
-    const ageGroupList = agePriceList.map(item=> item.ageGroup);
-    console.log(getNumberIntervals)
-  },[agePriceList])
+  useEffect(() => {
+    handleIsDiablePrice(setIsDisableAddPrice);
+    handleShowOverlapWarning(setIsShowOverlapWarning);
+  }, [agePriceList]);
+
+  /**
+   * Disable add button when all ages between 0 ~ 20 are selected
+   * @param setter set state function to disable / enable add button
+   */
+  const handleIsDiablePrice = (
+    setter: (isDisablePrice: boolean) => void
+  ): void => {
+    const ageGroupList = getAgeGroupList(agePriceList);
+    const isIncludeAllAge =
+      getNumberIntervals(ageGroupList).notInclude.length === 0 &&
+      ageGroupList.length !== 0;
+    setter(isIncludeAllAge);
+  };
+
+  /**
+   * Show overlap warning of "年齡區間不可重疊" when ages selected overlap
+   * @param setter set state function to show overlap warning
+   */
+  const handleShowOverlapWarning = (
+    setter: (isShowOverlapWarning: boolean) => void
+  ): void => {
+    const ageGroupList = getAgeGroupList(agePriceList);
+    console.log("overlap", getNumberIntervals(ageGroupList).overlap);
+    const isAgeOverlap =
+      getNumberIntervals(ageGroupList).overlap.length !== 0 &&
+      ageGroupList.length !== 0;
+    setter(isAgeOverlap);
+  };
+
+  const getAgeGroupList = (agePriceList: AgeGroupType[]): number[][] =>
+    agePriceList.map((item) => item.ageGroup);
 
   const updateAgeGroup = (
     selectedIndex: number,
@@ -78,22 +113,24 @@ export const AgeGroupPriceList = ({
             <AgeGroupSelect
               ageRange={agePriceList[index].ageGroup}
               setAgeRange={(newAgeRange) => updateAgeGroup(index, newAgeRange)}
+              isShowOverlapWarning={isShowOverlapWarning}
             />
             <PriceInput
               inputFee={agePriceList[index].price.toString()}
               setInputFee={(fee) => updatePrice(index, fee)}
             />
           </FlexWithMarginGap>
-          <GreenButton
+          <AddButton
             onClick={() =>
               setAgePriceList((prevList) => [
                 ...prevList,
                 { ...defaultAgePrice, id: prevList.length + 1 },
               ])
             }
+            disabled={isDisableAddPrice}
           >
             + 新增價格設定
-          </GreenButton>
+          </AddButton>
         </ColumnFlexbox>
       ))}
     </React.Fragment>
@@ -115,8 +152,9 @@ const FlexSpaceBetween = styled(FlexContainer)`
   justify-content: space-between;
 `;
 
-const GreenButton = styled.button`
-  color: ${(props) => props.theme.colors.green};
+const AddButton = styled.button`
+  color: ${(props) =>
+    props.disabled ? props.theme.colors.darkGrey : props.theme.colors.green};
   font-weight: bold;
   align-self: flex-start;
 `;

@@ -8,7 +8,7 @@ describe("AgeGroupSelect", () => {
     const handleChange = jest.fn();
     render(
       <ThemeProvider theme={theme}>
-        <AgeGroupSelect ageRange={[19, 20]} setAgeRange={() => handleChange} />
+        <AgeGroupSelect ageRange={[19, 20]} setAgeRange={() => handleChange} isShowOverlapWarning={false}/>
       </ThemeProvider>
     );
     expect(screen.queryByText("年齡區間不可重疊")).not.toBeInTheDocument();
@@ -17,7 +17,7 @@ describe("AgeGroupSelect", () => {
     const handleChange = jest.fn();
     render(
       <ThemeProvider theme={theme}>
-        <AgeGroupSelect ageRange={[20, 20]} setAgeRange={() => handleChange} />
+        <AgeGroupSelect ageRange={[20, 20]} setAgeRange={() => handleChange} isShowOverlapWarning={false}/>
       </ThemeProvider>
     );
     expect(screen.getByText("年齡區間不可重疊")).toBeInTheDocument();

@@ -14,11 +14,13 @@ import { AgeGroupType } from "../type";
 interface PropsType {
   ageRange: AgeGroupType["ageGroup"];
   setAgeRange: (ageRange: AgeGroupType["ageGroup"]) => void;
+  isShowOverlapWarning: boolean;
  }
 
 export const AgeGroupSelect = ({
   ageRange,
   setAgeRange,
+  isShowOverlapWarning
 }: PropsType): React.ReactElement => {
   const startOptions = useMemo(() => {
     if (ageRange[1] !== 20) {
@@ -54,6 +56,7 @@ export const AgeGroupSelect = ({
           aria-label="startAge"
           data-testid="startAge"
           $isRedBorder={ageRange[0] === ageRange[1]}
+          value={ageRange[0]}
           onChange={(e) => setAgeRange([Number(e.target.value), ageRange[1]])}
         >
           {startOptions.map((option) => (
@@ -71,6 +74,7 @@ export const AgeGroupSelect = ({
           aria-label="endAge"
           data-testid="endAge"
           $isRedBorder={ageRange[0] === ageRange[1]}
+          value={ageRange[1]}
           onChange={(e) => setAgeRange([ageRange[0], Number(e.target.value)])}
         >
           {endOptions.map((option) => (
@@ -84,7 +88,7 @@ export const AgeGroupSelect = ({
           ))}
         </StyledSelect>
       </FlexContainer>
-      {ageRange[0] === ageRange[1] && (
+      {(ageRange[0] === ageRange[1] || isShowOverlapWarning) && (
         <WarningArea>年齡區間不可重疊</WarningArea>
       )}
       <AlignLeftFlexBox>

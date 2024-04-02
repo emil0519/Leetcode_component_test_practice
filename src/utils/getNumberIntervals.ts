@@ -1,12 +1,25 @@
 export const getNumberIntervals = (
   numberArray: number[][]
 ): { overlap: number[][]; notInclude: number[][] } => {
-  const overlap = [];
-  const notInclude = [];
+  const overlap: number[][] = [];
+  const notInclude: number[][] = [];
   let gapStart = 0;
-  const sortedArray = numberArray.sort((a, b) => a[0] - b[0]); //  to sort the array base on the first number
+
+  if (numberArray.length === 1) {
+    const [start, end] = numberArray[0];
+    if (start !== 0) {
+      notInclude.push([0, start - 1]);
+    }
+    if (end !== 20) {
+      notInclude.push([end + 1, 20]);
+    }
+    return { overlap, notInclude };
+  }
+//  to sort the array base on the first number
+  const sortedArray = numberArray.sort((a, b) => a[0] - b[0]); 
   for (let i = 0; i < sortedArray.length - 1; i++) {
     const currentArray = sortedArray[i];
+
     const nextArray = sortedArray[i + 1];
     if (
       nextArray[0] <= currentArray[1] &&
@@ -19,14 +32,14 @@ export const getNumberIntervals = (
       const endOverlap = Math.min(nextArray[1], currentArray[1]);
       overlap.push([startOverlap, endOverlap]);
     }
-    // check for gaps
-    if (currentArray[0] > gapStart) {
-      notInclude.push([gapStart, currentArray[0] - 1]);
-      gapStart = Math.max(gapStart, currentArray[1] + 1);
+    // [[0,14],[16,17]] => 14 > 0(gapStart) && 16-14 =2, it satisfy this conditon
+    // while this condition blocks [[0,14]],[[15,20]] as 15-14 = 1, meaning neither 14 nor 15 is excluded
+    if (currentArray[1] > gapStart && nextArray[0] - currentArray[0] >= 2) {
+      gapStart = currentArray[1] + 1;
+      if (gapStart <= nextArray[0] - 1) notInclude.push([gapStart, nextArray[0] - 1]);
     }
-    if (currentArray[1] > gapStart) {
-      gapStart = Math.max(gapStart, currentArray[1] + 1);
-    }
+    // If one of the array is [0,20], it means every range is included, so clear notInclude
+    if (currentArray[0] === 0 && currentArray[1] === 20) notInclude.length = 0;
   }
   return { overlap, notInclude };
 };
