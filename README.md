@@ -1,10 +1,10 @@
 # Starting the project
 
 1. Clone the repo to your local environemnt 
-`mkdir emil_lau_code_test`
-`cd emil_lau_code_test`
-`git clone https://github.com/emil0519/for_interview.git`
-
+   mkdir emil_lau_code_test
+   cd emil_lau_code_test
+   git clone https://github.com/emil0519/for_interview.git
+   
 2. Install dependencies
 `npm i`
 
@@ -17,17 +17,10 @@ Open another terminal, then run
 
 # Folder structure
 
-├── public/ - icons and public resources
-|
-├── src/
-|
-│── ├── __tests__/ - tests using Jest
-|
-│── ├── components/ - reusable component
-|
-│── ├── styles/ - global style and reusable styles
-|
-│── ├── utils/ - utility functions (e.g., addComma, getNumberIntervals)
-|
-│── ├── App.tsx - major layout
-└── ...
+    src
+    .
+    ├── __tests__                # tests using Jest
+    ├── components               # reusable component
+    ├── styles                   # global style and reusable styles
+    ├── utils                    # utility functions (e.g., addComma, getNumberIntervals)
+    ├── App.tsx                  # major layout
