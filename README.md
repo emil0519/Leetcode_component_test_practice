@@ -9,14 +9,19 @@
 ```
 
 2. Install dependencies
-`npm i`
+```javascript
+    npm i
+```
 
 3. Run the app
-`npm start`
-
+```javascript
+    `npm start`
+```
 4. Run test
 Open another terminal, then run
-`npm run test`
+```javascript
+    `npm run test`
+```
 
 # Folder structure
 
