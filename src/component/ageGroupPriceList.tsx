@@ -57,7 +57,6 @@ export const AgeGroupPriceList = ({
     setter: (isShowOverlapWarning: boolean) => void
   ): void => {
     const ageGroupList = getAgeGroupList(agePriceList);
-    console.log("overlap", getNumberIntervals(ageGroupList).overlap);
     const isAgeOverlap =
       getNumberIntervals(ageGroupList).overlap.length !== 0 &&
       ageGroupList.length !== 0;
