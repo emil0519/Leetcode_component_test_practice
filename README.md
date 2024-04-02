@@ -15,12 +15,12 @@
 
 3. Run the app
 ```javascript
-    `npm start`
+    npm start
 ```
 4. Run test
 Open another terminal, then run
 ```javascript
-    `npm run test`
+    npm run test
 ```
 
 # Folder structure
