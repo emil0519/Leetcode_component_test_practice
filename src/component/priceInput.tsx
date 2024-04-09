@@ -43,7 +43,6 @@ export const PriceInput = ({inputFee, setInputFee}:PropsType):React.ReactElement
           placeholder="請輸入費用"
           value={inputFee}
           onChange={(e) => {
-            console.log(inputFee)
             if (!inputFee.length) setInputFee("");
             setInputFee(e.target.value);
           }}
